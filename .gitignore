@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Poetry
+# poetry.lock is intentionally committed
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VS Code / Cursor
+.vscode/
+# .cursor/ is intentionally not ignored — AGENTS.md and plans live here
+
+# Data files — never commit raw or proprietary data
+*.csv
+*.parquet
+*.json.gz
+data/raw/
+data/interim/
+data/processed/
+
+# Misc
+*.log
+.hypothesis/
