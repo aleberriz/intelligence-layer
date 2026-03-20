@@ -47,7 +47,7 @@ Nick Huntington-Klein — [free at theeffectbook.net](https://theeffectbook.net)
 
 ### omni-claude-skills
 [github.com/exploreomni/omni-claude-skills](https://github.com/exploreomni/omni-claude-skills)
-**Why it matters**: The reference implementation for AI skills on top of Omni's MCP server. Directly relevant to building reusable, composable analytics workflows for AI agents. Active contributor.
+**Why it matters**: The reference implementation for AI skills on top of Omni's MCP server. Directly relevant to building reusable, composable analytics workflows for AI agents.
 **Status**: Ongoing
 
 ---
@@ -69,14 +69,44 @@ Amplitude
 **Why it matters**: Practical framework for connecting input metrics (feature usage, engagement depth) to a North Star metric. Useful for the user behavior → MRR impact work — specifically for identifying which behavioral signals are leading indicators of monetization events.
 **Status**: Queued
 
+### Lenny's Newsletter
+[lennysnewsletter.com](https://www.lennysnewsletter.com) | [Podcast](https://www.lennyspodcast.com)
+**Why it matters**: The best ongoing practitioner reference for how PLG companies actually think about product metrics, growth loops, and monetization — written by and for people running real products, not academics. Not a structured course; treat it as a living reference. Particularly useful for calibrating which growth questions are worth asking and how high-functioning product teams frame measurement problems.
+**Status**: Ongoing reference
+
 ---
 
 ## Short Courses
 
 ### DeepLearning.ai Short Courses
 [deeplearning.ai/short-courses](https://www.deeplearning.ai/short-courses/)
-**Relevant titles**:
-- *MCP: Build Rich-Context AI Apps with Anthropic* — directly maps to Omni MCP work
-- *AI Agents in LangGraph* — how agentic systems are structured
-- *Prompt Engineering for Developers* — foundational
-**Status**: Queued
+Each course is 1–2 hours, free or low cost. Curated below for direct relevance — courses that don't map to the three pillars or the growth analytics domain are excluded regardless of general reputation.
+
+**MCP: Build Rich-Context AI Apps with Anthropic**
+The highest-priority course in this list. Taught by Anthropic's Head of Technical Education. Covers MCP client-server architecture, building MCP-compatible applications, and deploying MCP servers. Maps directly to the Omni MCP integration work.
+
+**AI Agents in LangGraph**
+The right foundation for understanding how agentic systems are architecturally structured — planning, tool use, reflection, multi-agent communication. Taught by LangChain's co-founder. Understanding this is what separates "I configured an MCP server" from "I understand why agentic analytics works."
+
+**Long-Term Agentic Memory with LangGraph**
+Companion to the above. Covers semantic, episodic, and procedural memory types for agents. Relevant for understanding how analytics agents can persist context across sessions — a design consideration when building skills that need to remember user preferences or prior queries.
+
+**Agent Memory: Building Memory-Aware Agents** *(March 2026)*
+Memory-first architecture with persistent memory stores, memory extraction and consolidation pipelines, and semantic tool retrieval. The most current treatment of agent memory available.
+
+**Evaluating AI Agents**
+Observability, component-level evaluation, and LLM-as-a-Judge patterns. Directly relevant for validating that AI skills built against your semantic layer are actually answering questions correctly — not just returning plausible-looking output.
+
+**Function-Calling and Data Extraction with LLMs**
+Function calling is the underlying mechanism behind MCP tools. Understanding it at this level clarifies why MCP works the way it does and how to design tools that LLMs can call reliably.
+
+**Building Your Own Database Agent**
+SQL + natural language agent using function calling and the Assistants API. The closest analog to an Omni MCP agent in the DeepLearning.ai catalog — directly applicable to understanding what happens when an AI queries your semantic layer.
+
+**Prompt Engineering for Developers**
+Foundational. Short. Still relevant — especially for analytics contexts where prompt precision directly affects whether a query returns the right metric or a plausible-but-wrong one.
+
+**Building and Evaluating Advanced RAG** *(conditional)*
+Relevant if you build knowledge-augmented analytics agents (e.g., an agent that retrieves documentation or prior analyses alongside querying the semantic layer). Skip if staying purely within the MCP + semantic layer pattern.
+
+**Status**: In progress — MCP course first, then LangGraph sequence
