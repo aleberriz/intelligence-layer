@@ -4,8 +4,7 @@
 
 Written on 2026-03-24
 
-**TL;DR**
-The semantic layer should be analyst-defined, engineer-constrained, and jointly published. Data Analysts are best positioned to define business meaning and AI-facing context; Analytics Engineers are best positioned to validate grain, joins, LOD logic, and performance. In an AI-facing environment, either side acting alone creates a different kind of failure: semantically wrong answers or mathematically wrong ones.
+> **TL;DR** The semantic layer should be analyst-defined, engineer-constrained, and jointly published. Data Analysts are best positioned to define business meaning and AI-facing context; Analytics Engineers are best positioned to validate grain, joins, LOD logic, and performance. In an AI-facing environment, either side acting alone creates a different kind of failure: semantically wrong answers or mathematically wrong ones.
 
 Who should own the semantic layer: the Analytics Engineer (AE) or the Data Analyst (DA)?
 
@@ -21,7 +20,7 @@ The AE counterargument is not just territorial. It is technically grounded, so d
 
 Modern semantic layers are not just thin wrappers for SQL. As the MetricFlow founders noted, even basic metrics can involve hundreds of lines of optimized SQL to handle joins, time analysis, and breakdowns. [[dbt Labs — "Who should own the semantic layer?"](https://www.getdbt.com/blog/semantic-layer-ownership)]
 
-The main issue is **grain** — the core level of data granularity in a fact table. Grain is the most important and least reversible decision in semantic layer design:
+The main issue is **grain**, the core level of data granularity in a fact table. Grain is the most important and least reversible decision in semantic layer design:
 
 * If a fact table is defined at order-level grain, you cannot accurately answer product-level questions (basket composition, SKU-level margins) without rebuilding the model.
 * If a model joins tables with mismatched grains without a valid matching rule, a single sale can be duplicated across multiple marketing events (e.g., leading to overcounted revenue).
@@ -31,7 +30,9 @@ The main issue is **grain** — the core level of data granularity in a fact tab
 
 **Level of Detail (LOD)** expressions compound this. LOD calculations allow metrics to be computed at a granularity different from the current visualization context. This is useful for cohort retention, per-customer averages, or market share calculations. But when applied incorrectly (wrong anchor dimension, missing filters, incorrect scope), they produce results that are numerically wrong in ways that are hard to detect visually. An analyst can easily configure an LOD expression without realizing that the underlying join logic makes it undefined.
 
-The AE's real case: if the DA gets grain wrong or sets LOD expressions without knowing joins, mistakes go unnoticed and spread. So AE technical checks aren't bureaucracy: they are needed.
+A separate concern is codebase congruence. A DA may write a definition that is technically correct in isolation, even optimal for the specific use case it addresses. But the AE sees the whole pipeline. A new metric may duplicate logic already expressed in an adjacent semantic model. A new dimension may use naming conventions inconsistent with established ones. A new join path may conflict with how related models are structured, or build on a dbt layer the AE knows is being refactored. None of these are mathematical errors that a test catches. They are architectural misalignments that accumulate silently, producing a layer where similar concepts are expressed differently depending on who authored them and when.
+
+The AE's real case: if the DA gets grain wrong, misconfigures LOD logic, or creates definitions that don't fit the broader pipeline architecture, errors spread invisibly. AE review is not bureaucracy. It is the check that keeps technical correctness and architectural consistency from diverging.
 
 ---
 
@@ -43,7 +44,7 @@ The AE's technical competence is real. But technical competence does not transfe
 
 This is more important for AI agents than dashboards. Because dashboard users may spot weird numbers, but AI agents can't (as they just return what the semantic layer gives). So a wrong metric can easily become a wrong confident answer. [[dbt Labs — "Who should own the semantic layer?"](https://www.getdbt.com/blog/semantic-layer-ownership)]
 
-Therefore, the AI-facing metadata fields — `ai_context`, `description`, `synonyms` in Omni; `description` in MetricFlow, which has no dedicated `ai_context` — are all business-meaning decisions. The decision about what constitutes revenue vs. gross revenue vs. net revenue after credits belongs here. An AE who owns these without DA input produces a model that is technically coherent and semantically arbitrary.
+Therefore, the AI-facing metadata fields (`ai_context`, `description`, and `synonyms` in Omni; `description` in MetricFlow, which has no dedicated `ai_context`) are all business-meaning decisions. The decision about what constitutes revenue vs. gross revenue vs. net revenue after credits belongs here. An AE who owns these without DA input produces a model that is technically coherent and semantically arbitrary.
 
 Omni's authoring model reflects this. The workbook-to-model promotion flow lets DAs define metric logic in a workbook (validating against real business questions) before promoting it to the shared model. The product assumes the person who understands the question defines the answer. [[Omni — "Put your semantic layer where the action happens"](https://omni.co/blog/put-your-semantic-layer-where-the-action-happens)]
 
@@ -59,6 +60,7 @@ But the answer to the initial question cannot be "both own everything together".
 | AI-facing metadata (`ai_context`, `description`, `synonyms` in Omni; `description` in MetricFlow) | DA | The DA's judgment should determine what AI agents "interpret" |
 | Access grants (what business concept does this grant govern?) | DA | Business rules, not technical rules |
 | Topic scoping (what questions should this topic answer?) | DA | Requires understanding of how the business consumes data |
+| Codebase congruence (does this fit the existing pipeline architecture?) | AE | Only the AE has full codebase context to catch duplication, naming drift, and structural conflicts |
 | Grain validation (is this fact table at the right level of detail?) | AE | Requires understanding of the underlying data model and join graph |
 | LOD expression review (is this aggregation mathematically valid?) | AE | Requires SQL and dimensional modeling expertise |
 | Join correctness (will this join fan out or produce duplicates?) | AE | Grain and fan trap analysis is AE territory |
