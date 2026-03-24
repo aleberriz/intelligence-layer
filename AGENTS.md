@@ -57,9 +57,9 @@ resources/
 
 ### Git
 - **Branch model**: one branch per topic — `docs/`, `feat/`, `chore/`, `research/`, `fix/`
-- **Commits**: [Conventional Commits](https://www.conventionalcommits.org/) — always `type: description` format
+- **Commits**: [Conventional Commits](https://www.conventionalcommits.org/) — always `type: description` format; single subject line by default. Add a body only when the *why* is genuinely non-obvious and not covered by the PR description — a workaround, a constraint someone might accidentally undo, a decision with real trade-offs. Not for restating what the diff already shows.
 - **Authorship**: All commits are authored by Alejandro (`git config user.name`). AI agents draft content; the human authors and commits. Never commit as the AI agent.
-- **PRs**: opened even for solo work — PR description documents the rationale, not just the diff
+- **PRs**: opened even for solo work — PR description carries the rationale, not just the diff. This is where the *why* lives; commit messages are index entries.
 
 ### Python
 - **Dependency manager**: [Poetry](https://python-poetry.org/) — `pyproject.toml` + committed `poetry.lock`
