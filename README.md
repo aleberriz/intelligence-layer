@@ -1,60 +1,57 @@
 # intelligence-layer
 
-**AI Analytics Architecture** — a practitioner knowledge base at the intersection of semantic layer design, causal inference, and agentic AI enablement.
+**Forecasting, Causal Inference & AI-Assisted Analytics** — a practitioner knowledge base for building and evaluating decision systems.
 
 ---
 
 ## What This Is
 
-The data analyst role is shifting. The value-add is moving away from shipping dashboards toward exercising judgment in semantic layer design — building the source-of-truth layer that powers human analysts, embedded tools, and AI agents equally.
-
-This repo is a working knowledge base for that transition. It documents frameworks, patterns, and applied research across three methodological capabilities — and one application domain where they converge in practice.
-
-It is not a course completion log. It is a practitioner's reference built in public.
+This repo documents frameworks, methods, and applied research across three areas of decision science. It is not a course log. It is a working reference built in public.
 
 ---
 
 ## The Three Pillars
 
-### Semantic Layer Design
-Designing a semantic layer is a governance and architecture problem, not a BI tool problem. Done well, it provides consistent metric definitions across every consumer — dashboards, notebooks, AI agents via MCP, and direct SQL. Done poorly, it creates the very inconsistency it was meant to eliminate.
-
-This pillar is organized around the [Open Semantic Interchange (OSI)](https://open-semantic-interchange.org/) standard — a vendor-agnostic spec for semantic model exchange backed by Omni, dbt Labs, Snowflake, Databricks, and 40+ other organizations. Omni and dbt/MetricFlow are the current implementation tools, chosen because both are active OSI members. The frameworks here are designed to be portable.
+### Forecasting
+Covers the full methodology stack: statistical approaches (ARIMA family, ETS, Holt-Winters), machine learning and global models (gradient boosting with lag features, deep learning), and foundation models (zero-shot approaches such as Chronos). Includes backtesting design, accuracy metrics, prediction intervals, and decision thresholds.
 
 ### Causal Inference
-Most analytics questions are causal, but most analytics methods are only descriptive. Knowing the difference — and knowing when you can answer a causal question rigorously vs. when you cannot — is a high-leverage skill that separates senior practitioners from report builders.
+Most analytics questions are causal, but most analytics methods are only descriptive. This pillar covers experimental design (A/B testing, RCTs), observational methods (difference-in-differences, regression discontinuity, synthetic controls), causal graphs and assumptions, and uplift/incrementality modeling.
 
-This pillar covers A/B testing methodology, experimental design, and observational causal methods (difference-in-differences, regression discontinuity, synthetic controls) for when experiments aren't feasible.
-
-### Agentic AI Enablement
-The semantic layer is becoming an API for AI agents. Understanding the Model Context Protocol, how to design Omni models for AI consumption, and how to build and evaluate AI skills that operate against a semantic layer is the forward edge of this field.
-
-This pillar covers MCP server architecture, AI skill design patterns, and prompt engineering for analytics contexts.
+### AI-Assisted Analytics Evaluation
+Not building AI chatbots — evaluating whether AI-generated analysis is correct, useful, and decision-ready. Covers eval dataset design, answer rubrics, failure taxonomy (hallucination, wrong metric, overclaim), and observability basics.
 
 ---
 
 ## Repository Structure
 
-### Capabilities
+### Core
 ```
 intelligence-layer/
-├── semantic-layer/          # Omni modeling, dbt Semantic Layer, design frameworks
-│   ├── omni/                # Omni YAML patterns, topic design, AI optimization
-│   ├── dbt/                 # MetricFlow, semantic layer integration
-│   └── frameworks/          # General design principles and decision frameworks
-├── causal-inference/        # Experimental design and observational causal methods
-│   ├── experimentation/     # A/B testing (RCTs) — a subset of causal inference
-│   └── notebooks/           # Applied notebooks on public datasets
-└── ai-enablement/           # MCP, AI skills, prompt patterns
-    ├── mcp/                 # MCP server patterns and integration notes
-    ├── skills/              # AI skill design (Omni-style and general)
-    └── prompts/             # Curated, tested prompt templates
+├── forecasting/
+│   ├── statistical/         # ARIMA, SARIMA, SARIMAX, ETS, Holt-Winters, Prophet
+│   ├── machine-learning/    # XGBoost/LightGBM with lag features, global models, deep learning
+│   ├── foundation-models/   # Chronos, TimesFM, Moirai — zero-shot approaches
+│   └── evaluation/          # Backtesting, accuracy metrics, prediction intervals
+├── causal-inference/
+│   ├── experimentation/     # A/B testing, RCTs
+│   ├── observational/       # DiD, regression discontinuity, synthetic controls
+│   ├── causal-graphs/       # DAGs, assumptions, do-calculus basics
+│   └── uplift/              # Uplift modeling, incrementality
+└── ai-evaluation/
+    ├── eval-design/         # Benchmark questions, dataset construction
+    ├── rubrics/             # Answer grading, correctness criteria
+    ├── failure-taxonomy/    # Hallucination, wrong metric, overclaim
+    └── observability/       # Traces, guardrails basics
 ```
 
-### Application Domain
+### Supporting
 ```
-├── growth-analytics/        # Where the three capabilities converge in practice
-│   └── frameworks/          # PLG metrics, retention, user behavior → revenue
+├── semantic-layer/          # Infrastructure literacy — metric governance, OSI, Omni
+│   ├── frameworks/
+│   └── omni/
+└── growth-analytics/        # Application domain — PLG metrics, retention, revenue
+    └── frameworks/
 ```
 
 ### Reference
@@ -67,14 +64,13 @@ intelligence-layer/
 ## Conventions
 
 - **Commits**: [Conventional Commits](https://www.conventionalcommits.org/) — `docs:`, `feat:`, `chore:`, `research:`, `fix:`
-- **Branches**: topic-scoped — `docs/semantic-layer-fundamentals`, `feat/power-calculator`, `research/mcp-protocol`
+- **Branches**: topic-scoped — `docs/forecasting-evaluation`, `feat/causal-dag-framework`, `research/chronos-backtesting`
 - **Python**: [Poetry](https://python-poetry.org/) for dependency management
-- **Notebooks**: Jupyter, always on public or synthetic datasets — no proprietary data
 
 ---
 
 ## About
 
-Built by [Alejandro Berrizbeitia](https://github.com/aleberriz) — Senior Data Analyst at [Kit](https://kit.com), active in the [OSI](https://open-semantic-interchange.org/) and [omni-claude-skills](https://github.com/exploreomni/omni-claude-skills) communities.
+Built by [Alejandro Berrizbeitia](https://github.com/aleberriz) — Data Scientist, Time Series & Forecasting Professor at [IE University](https://www.ie.edu), Senior Data Analyst at [Kit](https://kit.com).
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
